@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-{% for title in todo_titles  %}
-    <h3>
-    {{ title }}<br>
-    </h3>
-{%  endfor  %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>로그인</button>
+    </form>
 </body>
 </html>
