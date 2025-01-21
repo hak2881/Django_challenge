@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="{% url 'todo_create' %}" style="text-align: left">생성</a>
+{% for title in todo_titles  %}
+    <h3>
+        <a href="{% url 'todo_info' title.pk %}">{{ title }}</a>
+        <a href="{% url 'todo_update' title.pk %}">수정</a>
+        <form action="{% url 'todo_delete' title.pk %}" method="POST" style="display: inline">
+            {% csrf_token %}
+            <button>삭제</button>
+        </form>
+        <br>
+    </h3>
+{%  endfor  %}
+    <form method="get" style ="margin-bottom: 10px">
+    <input name="q" type="text" placeholder="검색어를 입력하세요" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}">
+    <button>검색</button>
+    </form>
+{% endblock %}

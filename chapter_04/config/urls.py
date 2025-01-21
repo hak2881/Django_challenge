@@ -17,15 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from todo.views import todo_list
-from todo.views import todo_info
+from todo.views import todo_list, todo_update, todo_delete
+from todo.views import todo_info, todo_create
 from member import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('todo_list/', todo_list, name = 'todo_list'),
-    path('todo_info/<int:pk>', todo_info,),
+    path('', todo_list, name = 'todo_list'),
+    path('todo_info/<int:pk>', todo_info, name='todo_info'),
     path('signup/', views.signup, name= 'signup'),
-    path('accounts/', include("django.contrib.auth.urls")),
+    path('accounts/', include("django.contrib.auth.urls")), # 이걸해줘야
+    path('create/',todo_create, name = 'todo_create'),
+    path('/<int:pk>',todo_update,name = 'todo_update'),
+    path('/<int:pk>/delete', todo_delete, name='todo_delete'),
     path('login/', views.login, name = 'login'),
 ]
