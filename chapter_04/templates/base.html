@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <nav>
+        <nav>
         <div style ="text-align: right">
             {% if request.user.is_authenticated %}
                 <form action="{% url 'logout' %}" method="POST" stlye="display: inline">
@@ -16,13 +16,9 @@
                 <a href ="{% url 'signup' %}">회원가입</a>
                 <a href ="{% url 'login' %}">로그인</a>
             {% endif %}
+                </form>
         </div>
     </nav>
-
-{% for title in todo_titles  %}
-    <h3>
-    {{ title }}<br>
-    </h3>
-{%  endfor  %}
+{% block content %}{% endblock %}
 </body>
 </html>

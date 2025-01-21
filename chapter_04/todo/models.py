@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 # Create your models here.
 class Todo(models.Model):
@@ -10,6 +14,7 @@ class Todo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now= True)
     is_completed = models.BooleanField(default=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):  # 객체를 admin 에서 읽기쉬운 문자열로 표현
         return self.title
