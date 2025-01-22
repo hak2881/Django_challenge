@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from django.urls.base import reverse
 
 User = get_user_model()
 
@@ -18,6 +18,9 @@ class Todo(models.Model):
 
     def __str__(self):  # 객체를 admin 에서 읽기쉬운 문자열로 표현
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('todo:info', kwargs={'pk':self.pk})
 
     class Meta:
         verbose_name = 'Todo'

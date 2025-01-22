@@ -9,7 +9,7 @@ def signup(request):
     form = UserCreationForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect(reverse('todo_list'))
+        return redirect(reverse('todo:list'))
 
     context = {
         'form' : form,
@@ -29,7 +29,7 @@ def login(request):
     if form.is_valid():
         print("Form is valid")
         django_login(request, form.get_user())
-        return redirect(reverse('todo_list'))
+        return redirect(reverse('todo:list'))
     else:
         print("Form errors:", form.errors)  # form 에러 출력
 

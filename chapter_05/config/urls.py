@@ -20,15 +20,22 @@ from django.urls import path, include
 from todo.views import todo_list, todo_update, todo_delete
 from todo.views import todo_info, todo_create
 from member import views
+from todo import cb_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', todo_list, name = 'todo_list'),
-    path('todo_info/<int:pk>', todo_info, name='todo_info'),
+
+    #FBV
+    # path('', todo_list, name = 'todo_list'),
+    # path('<int:pk>/', todo_info, name='todo_info'),
+    # path('create/', todo_create, name='todo_create'),
+    # path('<int:pk>/', todo_update, name='todo_update'),
+    # path('<int:pk>/delete/', todo_delete, name='todo_delete'),
+
+    path('', include('todo.urls')),
+
     path('signup/', views.signup, name= 'signup'),
     path('accounts/', include("django.contrib.auth.urls")), # 이걸해줘야
-    path('create/',todo_create, name = 'todo_create'),
-    path('/<int:pk>',todo_update,name = 'todo_update'),
-    path('/<int:pk>/delete', todo_delete, name='todo_delete'),
+
     path('login/', views.login, name = 'login'),
 ]
