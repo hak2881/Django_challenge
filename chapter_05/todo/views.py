@@ -24,10 +24,10 @@ def todo_list(request):
         todo_titles = todo_titles.filter(title__icontains=q)
 
     context = {
-    'todo_titles' : todo_titles,
+    'object_list' : todo_titles,
     'q': q,
     }
-
+    print(todo_titles)
     return render(request,'todo_list.html',context)
 
 def todo_info(request, pk):
@@ -39,7 +39,7 @@ def todo_info(request, pk):
         'title':todo.title,
         'description':todo.description,
         'created_at':todo.created_at,
-        'tart_date':todo.start_date,
+        'start_date':todo.start_date,
         'end_date':todo.end_date,
         'modified_at':todo.modified_at,
         'is_completed':todo.is_completed,

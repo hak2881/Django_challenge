@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <a href="{% url 'todo_create' %}" style="text-align: left">생성</a>
-{% for title in todo_titles  %}
+    <a href="{% url 'todo:create' %}" style="text-align: left">생성</a>
+{% for title in object_list  %}
+
     <h3>
-        <a href="{% url 'todo_info' title.pk %}">{{ title }}</a>
-        <a href="{% url 'todo_update' title.pk %}">수정</a>
-        <form action="{% url 'todo_delete' title.pk %}" method="POST" style="display: inline">
+        {% if request.user.is_staff %}{{ title.author.username }}:{% endif %}
+        <a href="{% url 'todo:info' title.pk %}">{{ title }}</a>
+        <a href="{% url 'todo:update' title.pk %}">수정</a>
+        <form action="{% url 'todo:delete' title.pk %}" method="POST" style="display: inline">
             {% csrf_token %}
             <button>삭제</button>
         </form>
