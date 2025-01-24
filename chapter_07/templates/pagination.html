@@ -1,0 +1,47 @@
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %} <!-- 이전테그가 있는지 확인하는 메서드 -->
+                                            <!-- 그리고 q도 넣어줘라 있으면 -->
+            <li class="page-item">
+                <a class="page-link" href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">&laquo; 첫번째</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">이전</a>
+            </li>
+            {% endif %}
+
+        {% if page_obj.number|add:-2 > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.number|add:-3 }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">&hellip;</a>
+            </li>
+        {% endif %}
+                    {#   1페이지부터 최대페이지 까지 들어있음     #}
+            {% for i in page_obj.paginator.page_range %}
+                <!-- 현재페이지 == i 이면 -->
+                {% if page_obj.number == i %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ i }}</span>
+                    </li>
+    {#        2페이지 -4+i < i < i+4  일때 쓸려는듯 이범위의 페이지만 나오게  #}
+                {% elif i > page_obj.number|add:-3 and i < page_obj.number|add:3 %} <!-- 띄워쓰면 오류나니까 잘 붙여쓰자 add -->
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+    {#   최대 페이지    #}
+        {% if page_obj.paginator.num_pages > page_obj.number|add:2 %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.number|add:3}}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">&hellip;</a>
+            </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">다음</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if fragment %}#{{ fragment }}{% endif %}">마지막 &raquo;</a>
+            </li>
+        {% endif %}
+        </ul>
+    </div>
